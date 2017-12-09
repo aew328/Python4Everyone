@@ -1,0 +1,23 @@
+#isolate domain names from mbox-short.txt
+fname = input('ENTER FILE NAME HERE: ')
+try:
+    fhand = open(fname)
+except:
+    print('THIS FILE DOES NOT EXIST')
+    exit()
+days = dict()
+for line in fhand:
+    line = line.rstrip()
+    words = line.split()
+    if not line.startswith('From '):
+        continue
+    #find email address
+    word_splice = words[1]
+    #find location where domain name starts
+    domain = word_splice.find('@')
+    key = word_splice[domain + 1:]
+    if key not in days:
+        days[key] = 1
+    else:
+        days[key] = days[key] + 1
+print(days)
